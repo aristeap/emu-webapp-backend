@@ -15,8 +15,11 @@ const {MongoClient} = require('mongodb');
 const pdfParse = require('pdf-parse');
 
 const app = express();
-const serverless = require('serverless-http');
-const port = 3019;
+// const serverless = require('serverless-http');
+// const port = 3019;
+const port = process.env.PORT || 3019; // Use Render's port or a default
+
+
 
 const multer = require('multer');
 const upload = multer(); // Initialize multer for parsing multipart form data
@@ -1657,4 +1660,7 @@ db.once('open', () => {
 
 // Start the server
 // We no longer start the server. Instead, we export a handler for Lambda.
-module.exports.handler = serverless(app);
+// module.exports.handler = serverless(app);
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
